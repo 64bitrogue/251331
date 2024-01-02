@@ -26,8 +26,8 @@ $result = mysqli_query($connection, $query);
 <body>
     <main>
         <section>
-            <a href="add-resident.php">+ New Resident</a>
-            <a href="transaction.php">Transaction</a>
+            <a href="create.php">+ New Resident</a>
+            <a href="transact.php">Transaction</a>
             <div>
                 <form action="index.php" method="get">
                     <input type="text" name="search" id="search" value="<?= $search ?>">
