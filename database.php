@@ -5,10 +5,8 @@ $dbname = "251331";
 $username = "root";
 $password = "";
 
-$mysqli = new mysqli($host, $username, $password, $dbname);
+$connection = new mysqli($host, $username, $password, $dbname);
 
-if ($mysqli->connect_errno) {
-    die("Connection error: " . $mysqli->connect_error);
+if (!$mysqli) {
+    die("Connection error: " . mysqli_error($connection));
 }
-
-return $mysqli;
