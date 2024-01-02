@@ -53,7 +53,7 @@ $result = mysqli_query($connection, $query);
                         <td><?= $row['resident_code'] ?></td>
                         <td><?= $row['given_name'] ?> <?= $row['middle_name'] ?> <?= $row['family_name'] ?></td>
                         <td><?= $row['date_of_birth'] ?></td>
-                        <td><?php printf("Php %.2f", $row['avg_monthly_salary']) ?></td>
+                        <td>Php <?= number_format($row['avg_monthly_salary'], 2) ?></td>
                         <td>
                             <a href="edit.php?id=<?= $row['resident_code'] ?>">Edit</a>
                             <form onsubmit="confirm('Do you confirm deleting this record?')" action="delete.php" method="post">
