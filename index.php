@@ -26,7 +26,7 @@ $result = mysqli_query($connection, $query);
 <body>
     <main>
         <section>
-            <a href="create.php">+ New Resident</a>
+            <a href="create.php">New Resident</a>
             <a href="transact.php">Transaction</a>
             <div>
                 <form action="index.php" method="get">
@@ -52,7 +52,7 @@ $result = mysqli_query($connection, $query);
                     <tr>
                         <td><?= $row['resident_code'] ?></td>
                         <td><?= $row['given_name'] ?> <?= $row['middle_name'] ?> <?= $row['family_name'] ?></td>
-                        <td><?= $row['date_of_birth'] ?></td>
+                        <td><?= date_format(date_create($row['date_of_birth']), "F j, Y") ?></td>
                         <td>Php <?= number_format($row['avg_monthly_salary'], 2) ?></td>
                         <td>
                             <a href="edit.php?id=<?= $row['resident_code'] ?>">Edit</a>
