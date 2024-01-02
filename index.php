@@ -1,3 +1,21 @@
+<?php
+
+include "connect.php";
+
+$search = null;
+$query = null;
+
+if (isset($_GET['search']) && strlen($_GET['search']) > 0) {
+    $search = trim(htmlspecialchars(strip_tags($_GET['search'])));
+    $query = "SELECT * FROM residents WHERE resident_code LIKE '%$search%' OR resident_name LIKE '%$search%'";
+} else {
+    $query = "SELECT * FROM residents";
+}
+
+$result = mysqli_query($connection, $query);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,17 +24,16 @@
     <title>251331</title>
 </head>
 <body>
-    <header>
-        <div>
-            <h1>Name</h1>
-            <h2>Group #</h2>
-            <p>Feel free to remove this header.</p>
-        </div>
-    </header>
     <main>
         <section>
             <a href="add-resident.php">+ New Resident</a>
             <a href="transaction.php">Transaction</a>
+            <div>
+                <form action="index.php" method="get">
+                    <input type="text" name="search" id="search" value="<?= $search ?>">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
         </section>
         <section>
             <table>
@@ -28,18 +45,27 @@
                     <th>Actions</th>
                 </thead>
                 <tbody>
+                <?php
+                if ($result) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                    ?>
                     <tr>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
-                        <td>Test</td>
+                        <td><?= $row['resident_code'] ?></td>
+                        <td><?= $row['resident_name'] ?></td>
+                        <td><?= $row['date_of_birth'] ?></td>
+                        <td>Php <?= $row['avg_monthly_salary'] ?></td>
                         <td>
-                            <a href="edit.php">Edit</a>
-                            <form onsubmit="confirm('Sure?')" action="delete.php" method="post">
+                            <a href="edit.php?id=<?= $row['resident_code'] ?>">Edit</a>
+                            <form onsubmit="confirm('Do you confirm deleting this record?')" action="delete.php" method="post">
+                                <input type="hidden" name="id" value="<?= $row['resident_code'] ?>">
                                 <button type="submit" name="delete">Delete</button>
                             </form>
                         </td>
                     </tr>
+                    <?php
+                    }
+                }
+                ?>
                 </tbody>
             </table>
         </section>
